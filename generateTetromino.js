@@ -1,7 +1,22 @@
-import {TETROMINO_NAMES, TETROMINOES, PLAYFIELD_COLUMNS} from './constants.js';
-import {getRandomHexColor, getRandomTetromino} from './utility.js'
+import {
+  TETROMINO_NAMES,
+  TETROMINOES,
+  PLAYFIELD_COLUMNS,
+} from "./constants.js";
+import { getRandomTetromino } from "./utility.js";
+
+
 
 export let tetromino;
+export let tetrominoNext;
+
+export function setTetromino(t) {
+  tetromino = t
+}
+
+export function setTetrominoNext(t) {
+  tetrominoNext = t;
+}
 
 export function generateTetromino() {
   const nameTetro = TETROMINO_NAMES[getRandomTetromino(TETROMINO_NAMES.length)];
@@ -10,13 +25,12 @@ export function generateTetromino() {
   const columnTetro = Math.floor((PLAYFIELD_COLUMNS - 3) / 2);
   const rowTetro = -2;
 
-  // const colorTetro = getRandomHexColor();
-
-  tetromino = {
+ return {
     name: nameTetro,
     matrix: matrixTetro,
     row: rowTetro,
     column: columnTetro,
-    // color: colorTetro,
   };
 }
+
+

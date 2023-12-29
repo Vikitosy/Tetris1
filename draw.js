@@ -3,7 +3,7 @@ import { playfield } from "./generatePlayfield.js";
 
 import { tetromino } from "./generateTetromino.js";
 
-function convertPositionToIndex(row, column) {
+export function convertPositionToIndex(row, column) {
   return row * PLAYFIELD_COLUMNS + column;
 }
 

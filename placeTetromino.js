@@ -1,4 +1,4 @@
-import { tetromino, generateTetromino } from "./generateTetromino.js";
+import { tetromino, tetrominoNext, generateTetromino, setTetrominoNext, setTetromino } from "./generateTetromino.js";
 import { playfield } from "./generatePlayfield.js";
 import { removeFillRows } from "./removeFillRows.js";
 import { findFilledRows } from "./findFilledRows.js";
@@ -8,9 +8,6 @@ import { game } from "./game.js";
 
 import { nextLevel } from "./level.js";
 
-
-
-
 export function placeTetromino() {
   const matrixSize = tetromino.matrix.length;
   for (let row = 0; row < matrixSize; row++) {
@@ -18,7 +15,7 @@ export function placeTetromino() {
       if (!tetromino.matrix[row][column]) continue;
       if (isOutsideTopBoard(row)) {
         game.isGameOver = true;
-        
+
         return;
       }
       playfield[tetromino.row + row][tetromino.column + column] =
@@ -32,5 +29,8 @@ export function placeTetromino() {
     countScore(filledRows.length);
     nextLevel();
   }
-  generateTetromino();
+  setTetromino(tetrominoNext);
+  setTetrominoNext(generateTetromino());
+  console.log(tetromino);
+  console.log(tetrominoNext);
 }

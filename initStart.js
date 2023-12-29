@@ -1,4 +1,5 @@
 import { draw } from "./draw.js";
+// import { drawNext } from "./nextTetrominoField.js";
 
 import {
   moveTetrominoDown,
@@ -15,6 +16,8 @@ import { delayStep } from "./constants.js";
 import { levelEl } from "./level.js";
 import { scoreEl } from "./countScore.js";
 
+import { setTetromino, setTetrominoNext } from "./generateTetromino.js";
+
 const startBtn = document.querySelector("button[data-start]");
 const pauseBtn = document.querySelector("button[data-pause]");
 const restartBtn = document.querySelector("button[data-restart]");
@@ -22,11 +25,21 @@ const rotateBtn = document.querySelector("button[data-rotate]");
 const leftBtn = document.querySelector("button[data-left]");
 const rightBtn = document.querySelector("button[data-right]");
 const downBtn = document.querySelector("button[data-down]");
+const playerForm = document.querySelector(".player-form");
+const startWindowEl = document.querySelector(".start-game");
+
 
 export function initStart() {
+
+  // startWindowEl.style.display = "none";
+
+  playerForm.addEventListener("submit", onFormSubmit);
+
   pauseBtn.style.display = "none";
 
   startBtn.addEventListener("click", () => {
+    
+
     document.addEventListener("keydown", onKeyDown);
     restartBtn.addEventListener("click", restartGame);
     rotateBtn.addEventListener("click", rotateTetromino);
@@ -48,10 +61,26 @@ export function initStart() {
   });
 }
 
+
+
+
+
+function onFormSubmit(evt) {
+  evt.preventDefault();
+  const player = evt.currentTarget.elements;
+  if (player.name.value == "") {
+    game.playerName = "Anonimus";
+  } else {
+    game.playerName = player.name.value;
+  }
+
+  console.log(player.name.value);
+  startWindowEl.style.display = "none";
+  console.log(game);
+}
+
 let timeoutId;
 let requestId;
-
-let isGameOver;
 
 const gameOverBlock = document.querySelector(".game-over");
 
@@ -77,14 +106,15 @@ function restartGame() {
   gameOverBlock.style.display = "none";
   game.isGameOver = false;
   generatePlayfield();
-  generateTetromino();
+  setTetromino(generateTetromino());
+  setTetrominoNext(generateTetromino());
   stopLoop();
   startBtn.style.display = "block";
   pauseBtn.style.display = "none";
-  game.playerName= 'Anonimus';
-  game.totalScore= 0;
-  game.level= 0;
-  game.isGameOver= false;
+  game.playerName = "Anonimus";
+  game.totalScore = 0;
+  game.level = 0;
+  game.isGameOver = false;
   levelEl.textContent = `${game.level}`;
   scoreEl.textContent = `${game.totalScore}`;
   console.log(game);
@@ -95,6 +125,7 @@ btnRestart.addEventListener("click", restartGame);
 function moveDown() {
   moveTetrominoDown();
   draw();
+  // drawNext();
   stopLoop();
   startLoop();
   if (game.isGameOver) {
