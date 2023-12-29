@@ -40,3 +40,8 @@ export const TETROMINOES = {
     [1, 0, 0, 0],
   ],
 };
+
+
+export const delayStep = 100;
+
+export const levelStep = 50;

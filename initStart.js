@@ -7,34 +7,33 @@ import {
   onKeyDown,
 } from "./move.js";
 
-// import { isGameOver } from "./placeTetromino.js";
-
 import { generatePlayfield } from "./generatePlayfield.js";
 import { generateTetromino } from "./generateTetromino.js";
 import { rotateTetromino } from "./rotateTetromino.js";
+import { game } from "./game.js";
+import { delayStep } from "./constants.js";
+import { levelEl } from "./level.js";
+import { scoreEl } from "./countScore.js";
 
 const startBtn = document.querySelector("button[data-start]");
 const pauseBtn = document.querySelector("button[data-pause]");
-// const restartBtn = document.querySelector("button[data-restart]");
+const restartBtn = document.querySelector("button[data-restart]");
 const rotateBtn = document.querySelector("button[data-rotate]");
 const leftBtn = document.querySelector("button[data-left]");
 const rightBtn = document.querySelector("button[data-right]");
 const downBtn = document.querySelector("button[data-down]");
-
-
-
 
 export function initStart() {
   pauseBtn.style.display = "none";
 
   startBtn.addEventListener("click", () => {
     document.addEventListener("keydown", onKeyDown);
-    // restartBtn.addEventListener("click", )
+    restartBtn.addEventListener("click", restartGame);
     rotateBtn.addEventListener("click", rotateTetromino);
     leftBtn.addEventListener("click", moveTetrominoLeft);
     rightBtn.addEventListener("click", moveTetrominoRight);
     downBtn.addEventListener("click", moveTetrominoDown);
-    
+
     console.log("start");
     startLoop();
     pauseBtn.style.display = "block";
@@ -52,39 +51,53 @@ export function initStart() {
 let timeoutId;
 let requestId;
 
-
 let isGameOver;
 
-// const game = {
-//   isGameOver,
-// };
-
-export function setIsGameOver(newValue) {
-  isGameOver = newValue;
-}
-
 const gameOverBlock = document.querySelector(".game-over");
+
+// gameOverBlock.style.display = "flex";
+
+const gameOverName = document.querySelector(".player-name");
+const gameOverLevel = document.querySelector(".player-level");
+const gameOverScore = document.querySelector(".player-score");
+const gameOverBestScore = document.querySelector(".best-score");
 
 function gameOver() {
   stopLoop();
   gameOverBlock.style.display = "flex";
+  gameOverName.textContent = `${game.playerName}`;
+  gameOverLevel.textContent = `${game.level}`;
+  gameOverScore.textContent = `${game.totalScore}`;
+  // gameOverBestScore.textContent = `${game.level}`;
 }
 
 const btnRestart = document.querySelector(".restart");
 
-btnRestart.addEventListener("click", function () {
+function restartGame() {
   gameOverBlock.style.display = "none";
-  setIsGameOver(false);
+  game.isGameOver = false;
   generatePlayfield();
   generateTetromino();
-});
+  stopLoop();
+  startBtn.style.display = "block";
+  pauseBtn.style.display = "none";
+  game.playerName= 'Anonimus';
+  game.totalScore= 0;
+  game.level= 0;
+  game.isGameOver= false;
+  levelEl.textContent = `${game.level}`;
+  scoreEl.textContent = `${game.totalScore}`;
+  console.log(game);
+}
+
+btnRestart.addEventListener("click", restartGame);
 
 function moveDown() {
   moveTetrominoDown();
   draw();
   stopLoop();
   startLoop();
-  if (isGameOver) {
+  if (game.isGameOver) {
     gameOver();
   }
 }
@@ -92,7 +105,7 @@ function moveDown() {
 export function startLoop() {
   timeoutId = setTimeout(
     () => (requestId = requestAnimationFrame(moveDown)),
-    700
+    700 - game.level * delayStep
   );
 }
 

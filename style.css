@@ -21,7 +21,7 @@ body {
 }
 h1 {
   position: absolute;
-  top:10px;
+  top: 10px;
   left: 45%;
   font-size: 50px;
 }
@@ -88,7 +88,7 @@ h1 {
 
   justify-content: flex-start;
   border-radius: 0px 8px 8px 0px;
-  background: #d9d9d9;
+  background-color: #d9d9d9;
 }
 .score {
   display: flex;
@@ -211,24 +211,115 @@ h1 {
   background: linear-gradient(rgb(126, 126, 134), rgb(70, 71, 76))
     rgb(126, 126, 134);
 }
+
+.start-game {
+  position: fixed;
+  background-color: rgba(185, 185, 185, 0.405);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.start-game-container,
+.game-over div {
+  background-color: #d9d9d9;
+  padding: 36px;
+}
+.start-game-container h2 {
+  font-size: 46px;
+  margin-bottom: 20px;
+}
+.player-form {
+  display: flex;
+  flex-direction: column;
+  font-size: 28px;
+  text-align: center;
+}
+.player-form input {
+  font-size: 28px;
+  font-family: "Orbitron", Arial, Helvetica, sans-serif;
+  margin-bottom: 40px;
+}
+
+.player-form button,
+.game-over button {
+  font-size: 28px;
+  font-family: "Orbitron", Arial, Helvetica, sans-serif;
+  color: rgb(215, 215, 215);
+
+  text-decoration: none;
+  text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+  padding: 0.7em 0.6em;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  background: linear-gradient(rgb(129, 131, 138), rgb(33, 33, 34))
+    rgb(133, 134, 139);
+  box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 3px 5px rgba(0, 1, 6, 0.5),
+    0 0 1px 1px rgba(0, 1, 6, 0.2);
+}
+
+.player-form button:hover,
+.game-over button:hover {
+  background: linear-gradient(rgb(126, 126, 134), rgb(70, 71, 76))
+    rgb(126, 126, 134);
+}
 .game-over {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.405);
   width: 100%;
   height: 100%;
   display: none;
+
   justify-content: center;
   align-items: center;
+  font-size: 48px;
+  font-weight: 900;
 }
+.game-over div {
+  background-color: #d9d9d9;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.game-over p {
+  display: block;
+}
+.game-over h2 {
+  font-size: 89px;
+  color: #de1f1f;
+  font-weight: 900;
+}
+.player-name {
+  color: #1b178f;
+}
+.player-level,
+.player-score,
+.best-score {
+  display: inline-block;
 
-.restart {
-  background-color: rgb(233, 230, 230);
-  padding: 20px;
-  border: none;
-  font-size: 36px;
-  font-family: Arial, sans-serif;
+  padding: 4px 16px;
+  border-radius: 4px;
+  background: rgba(148, 148, 148, 0.59);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.405) inset;
+
+  font-size: 32px;
+
   font-weight: 700;
-  color: rgb(53, 11, 92);
-  border-radius: 12px;
-  cursor: pointer;
+  color: rgb(36, 58, 84);
+  text-align: right;
+  margin-bottom: 20px;
+}
+li {
+  display: flex;
+  justify-content: space-between;
+}
+.score-list {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  padding: 40;
+  list-style: none;
 }

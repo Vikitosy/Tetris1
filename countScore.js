@@ -1,6 +1,6 @@
-let totalScore = 0;
+import { game } from "./game.js";
 
-const scoreEl = document.querySelector(".totalScore p");
+ export const scoreEl = document.querySelector(".totalScore p");
 
 const scorePoint = {
   1: 10,
@@ -10,8 +10,8 @@ const scorePoint = {
 };
 
 export function countScore(row) {
-  totalScore += scorePoint[`${row}`];
+  game.totalScore += scorePoint[`${row}`];
 
-  scoreEl.textContent = `${totalScore}`;
-  return totalScore;
+  scoreEl.textContent = `${game.totalScore}`;
+  return game.totalScore;
 }
