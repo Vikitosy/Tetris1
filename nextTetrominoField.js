@@ -1,34 +1,36 @@
 import { tetrominoNext } from "./generateTetromino.js";
-import {convertPositionToIndex} from './draw.js';
+import { convertPositionToIndex } from "./draw.js";
+import { PLAYFIELD_COLUMNS_NEXT, PLAYFIELD_ROWS_NEXT } from "./constants.js";
 
-
-
+export let playfieldNext;
 
 export function tetrominoNextField() {
   document.querySelector(".tetromino-field").innerHTML = "";
-  for (let i = 0; i < tetrominoNext.row * tetrominoNext.column; i++) {
+  for (let i = 0; i < PLAYFIELD_ROWS_NEXT * PLAYFIELD_COLUMNS_NEXT; i++) {
     const div = document.createElement("div");
     document.querySelector(".tetromino-field").append(div);
   }
-  playfield = new Array(tetrominoNext.row)
-    .fill(5)
-    .map(() => new Array(tetrominoNext.column).fill(0));
-}
-const cellsNextField = () => document.querySelectorAll(".tetromino-field div");
 
-// export function drawtetrominoNextField() {
-//   for (let row = 0; row < tetrominoNext.row; row++) {
-//     for (let column = 0; column < tetrominoNext.column; column++) {
-//       if (tetrominoNext[row][column] == 0) {
-//         continue;
-//       }
-//       const name = tetrominoNext[row][column];
-//       const cellIndex = convertPositionToIndex(row, column);
-//       cellsNextField()[cellIndex].classList.add(name);
-     
-//     }
-//   }
-// }
+  playfieldNext = new Array(PLAYFIELD_ROWS_NEXT)
+    .fill()
+    .map(() => new Array(PLAYFIELD_COLUMNS_NEXT).fill(0));
+}
+
+export const cellsNextField = () =>
+  document.querySelectorAll(".tetromino-field div");
+
+export function drawtetrominoNextField() {
+  for (let row = 0; row < PLAYFIELD_ROWS_NEXT; row++) {
+    for (let column = 0; column < PLAYFIELD_COLUMNS_NEXT; column++) {
+      if (playfieldNext[row][column] == 0) {
+        continue;
+      }
+      const name = playfieldNext[row][column];
+      const cellIndex = convertPositionToIndex(row, column);
+      cellsNextField()[cellIndex].classList.add(name);
+    }
+  }
+}
 
 export function drawTetrominoNext() {
   const name = tetrominoNext.name;
@@ -36,29 +38,29 @@ export function drawTetrominoNext() {
 
   for (let row = 0; row < tetrominoMatrixSize; row++) {
     for (let column = 0; column < tetrominoMatrixSize; column++) {
-      if (tetrominoNext.row + row < 0) {
+      if (row < 0) {
         continue;
       }
       if (!tetrominoNext.matrix[row][column]) {
         continue;
       }
+
       const cellIndex = convertPositionToIndex(
-        tetrominoNext.row + row,
-        tetrominoNext.column + column
+        tetrominoNext.row + row + 2,
+        tetrominoNext.column + column - 3,
+        4 // Next tetromino preview field column count
       );
       cellsNextField()[cellIndex].classList.add(name);
-    
     }
   }
 }
 
 export function drawNext() {
-//   cellsNextField().forEach(function (cell) {
-//     cell.removeAttribute("class");
+  cellsNextField().forEach(function (cell) {
+    cell.removeAttribute("class");
+  });
 
-//   });
-
-// drawtetrominoNextField();
+  drawtetrominoNextField();
 
   drawTetrominoNext();
 }

@@ -1,5 +1,7 @@
 import { draw } from "./draw.js";
-// import { drawNext } from "./nextTetrominoField.js";
+import { drawNext } from "./nextTetrominoField.js";
+
+import { playfieldNext, cellsNextField } from "./nextTetrominoField.js";
 
 import {
   moveTetrominoDown,
@@ -8,7 +10,7 @@ import {
   onKeyDown,
 } from "./move.js";
 
-import { generatePlayfield } from "./generatePlayfield.js";
+import { generatePlayfield, playfield } from "./generatePlayfield.js";
 import { generateTetromino } from "./generateTetromino.js";
 import { rotateTetromino } from "./rotateTetromino.js";
 import { game } from "./game.js";
@@ -31,7 +33,7 @@ const startWindowEl = document.querySelector(".start-game");
 
 export function initStart() {
 
-  // startWindowEl.style.display = "none";
+  startWindowEl.style.display = "none";
 
   playerForm.addEventListener("submit", onFormSubmit);
 
@@ -59,6 +61,9 @@ export function initStart() {
     startBtn.style.display = "block";
     pauseBtn.style.display = "none";
   });
+
+  console.log(playfieldNext)
+  console.log(cellsNextField());
 }
 
 
@@ -125,7 +130,7 @@ btnRestart.addEventListener("click", restartGame);
 function moveDown() {
   moveTetrominoDown();
   draw();
-  // drawNext();
+  drawNext();
   stopLoop();
   startLoop();
   if (game.isGameOver) {

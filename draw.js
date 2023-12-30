@@ -3,8 +3,12 @@ import { playfield } from "./generatePlayfield.js";
 
 import { tetromino } from "./generateTetromino.js";
 
-export function convertPositionToIndex(row, column) {
-  return row * PLAYFIELD_COLUMNS + column;
+export function convertPositionToIndex(
+  row,
+  column,
+  numberOfColumns = PLAYFIELD_COLUMNS
+) {
+  return row * numberOfColumns + column;
 }
 
 const cells = () => document.querySelectorAll(".tetris div");
