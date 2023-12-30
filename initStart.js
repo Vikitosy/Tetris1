@@ -17,6 +17,7 @@ import { game } from "./game.js";
 import { delayStep } from "./constants.js";
 import { levelEl } from "./level.js";
 import { scoreEl } from "./countScore.js";
+import { extractBestScore, saveBestScore } from "./bestScore.js";
 
 import { setTetromino, setTetrominoNext } from "./generateTetromino.js";
 
@@ -32,8 +33,8 @@ const startWindowEl = document.querySelector(".start-game");
 
 
 export function initStart() {
-
-  startWindowEl.style.display = "none";
+extractBestScore();
+  // startWindowEl.style.display = "none";
 
   playerForm.addEventListener("submit", onFormSubmit);
 
@@ -98,11 +99,12 @@ const gameOverBestScore = document.querySelector(".best-score");
 
 function gameOver() {
   stopLoop();
+  saveBestScore();
   gameOverBlock.style.display = "flex";
   gameOverName.textContent = `${game.playerName}`;
   gameOverLevel.textContent = `${game.level}`;
   gameOverScore.textContent = `${game.totalScore}`;
-  // gameOverBestScore.textContent = `${game.level}`;
+  gameOverBestScore.textContent = `${game.bestScore}`;
 }
 
 const btnRestart = document.querySelector(".restart");

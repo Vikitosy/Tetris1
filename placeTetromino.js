@@ -7,6 +7,7 @@ import { isOutsideTopBoard } from "./isValid.js";
 import { game } from "./game.js";
 
 import { nextLevel } from "./level.js";
+import { bestScore } from "./bestScore.js";
 
 export function placeTetromino() {
   const matrixSize = tetromino.matrix.length;
@@ -28,6 +29,7 @@ export function placeTetromino() {
   if (filledRows != 0) {
     countScore(filledRows.length);
     nextLevel();
+    bestScore();
   }
   setTetromino(tetrominoNext);
   setTetrominoNext(generateTetromino());

@@ -3,7 +3,7 @@ export const game = {
   totalScore: 0,
   level: 0,
   isGameOver: false,
-
+bestScore: 0,
 };
 
 
